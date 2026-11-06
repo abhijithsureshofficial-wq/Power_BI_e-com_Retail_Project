@@ -118,6 +118,5 @@ Data modelling (star schema), DAX (time intelligence, `TREATAS`, `RANKX`, contex
 
 ## Author
 
-**Your Name** | [LinkedIn](https://www.linkedin.com/) | [Email](mailto:you@example.com)
+**Abhijith Suresh** | [LinkedIn](https://www.linkedin.com/in/ab-suresh) | [Email](abhijithsureshofficial@gmail.com.com)
 
-*Dataset: add the source and licence here if you have one.*
