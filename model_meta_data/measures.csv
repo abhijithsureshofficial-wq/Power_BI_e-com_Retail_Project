@@ -1,0 +1,54 @@
+ID,TableID,Name,Description,DataType,Expression,FormatString,IsHidden,State,ModifiedTime,StructureModifiedTime,KPIID,IsSimpleMeasure,ErrorMessage,DisplayFolder,DetailRowsDefinitionID,DataCategory,FormatStringDefinitionID,LineageTag,SourceLineageTag
+2925,2850,"Total Sales","",8,"SUM('Fact_Sales'[Net_Sales])","\$#,0.0;(\$#,0.0);\$#,0.0",False,1,2026-11-05 20:19:35.753,2026-11-05 19:58:02.163,,False,"","",,"",,"08db7c4c-0f1a-431b-9cb3-9944903c0e10",""
+2930,2850,"Total Profit","",8,"SUM('Fact_Sales'[Profit])","\$#,0.0;(\$#,0.0);\$#,0.0",False,1,2026-11-05 20:19:47.163,2026-11-05 19:58:58.240,,False,"","",,"",,"8e74769b-2d29-4e25-9d67-8d92eeea4cd9",""
+2933,2850,"Profit Margin","",8,"DIVIDE([Total Profit], [Total Sales], 0)","0.00%;-0.00%;0.00%",False,1,2026-11-05 19:59:49.863,2026-11-05 19:59:24.063,,False,"","",,"",,"4f062a80-b387-4d78-9fc2-72985da67398",""
+2936,2850,"Total Quantity","",6,"SUM('Fact_Sales'[Quantity])","0",False,1,2026-11-05 20:00:08.963,2026-11-05 20:00:01.583,,False,"","",,"",,"d9929a01-040b-4cb7-b7b5-11305a76dacb",""
+2938,2850,"Sales PY","",8,"CALCULATE([Total Sales], SAMEPERIODLASTYEAR('Date_Table'[Date]))","",False,1,2026-11-05 20:00:22.003,2026-11-05 20:00:17.413,,False,"","",,"",,"e9ded234-22fa-4aa0-9ac1-100d7578d495",""
+2941,2850,"YoY Sales %","",8,"DIVIDE([Total Sales] - [Sales PY], [Sales PY], 0)","0.00%;-0.00%;0.00%",False,1,2026-11-05 20:00:50.356,2026-11-05 20:00:34.700,,False,"","",,"",,"d580ef3d-1978-40b9-afcb-f948745e6c6c",""
+2944,2850,"Total Target","",8,"
+VAR TargetContext =
+    DISTINCT(
+        SELECTCOLUMNS(
+            SUMMARIZE(
+                'Fact_Sales',
+                'Date_Table'[Date],
+                'Fact_Sales'[Region],
+                'Dim_Product'[Category]
+            ),
+            ""YearMonth"", FORMAT([Date], ""yyyy-MM""),
+            ""Region"", [Region],
+            ""Category"", [Category]
+        )
+    )
+RETURN
+CALCULATE(
+    SUM('Monthly_Sales_Targets'[Target_Sales]),
+    TREATAS(
+        TargetContext,
+        'Monthly_Sales_Targets'[YearMonth],
+        'Monthly_Sales_Targets'[Region],
+        'Monthly_Sales_Targets'[Category]
+    )
+)","",False,1,2026-11-05 20:04:47.963,2026-11-05 20:01:14.483,,False,"","",,"",,"889ddc5d-897e-41d3-b660-6a7ef08eec39",""
+2946,2850,"Target Achievement %","",8,"DIVIDE([Total Sales], [Total Target], 0)","0.00%;-0.00%;0.00%",False,1,2026-11-05 20:04:47.963,2026-11-05 20:02:47.986,,False,"","",,"",,"03a21e93-6233-491a-8902-b2b701d19dad",""
+4413,2850,"Product Rank","",6,"
+VAR CurrentSales = [Total Sales]
+RETURN
+IF(
+    HASONEVALUE('Dim_Product'[Product_Name]),
+    RANKX(
+        ALL('Dim_Product'),
+        [Total Sales],
+        CurrentSales,
+        DESC,
+        Dense
+    ),
+    BLANK()
+)","0",False,1,2026-11-06 07:56:24.393,2026-11-06 07:51:26.126,,False,"","",,"",,"9b89a352-84cc-43c9-b293-6c127cc0661e",""
+4415,2850,"Last Purchase Date","",9,"MAX('Fact_Sales'[Order_Date])","Short Date",False,1,2026-11-06 08:02:29.816,2026-11-06 08:00:27.650,,False,"","",,"",,"8a737472-2c8c-4d3f-9ce4-f465556e62c1",""
+4417,2850,"Contribution %","",8,"
+DIVIDE(
+    [Total Sales], 
+    CALCULATE([Total Sales], ALL('Fact_Sales')), 
+    0
+)","0.00%;-0.00%;0.00%",False,1,2026-11-06 08:21:04.490,2026-11-06 08:20:45.446,,False,"","",,"",,"360c676d-a183-446c-aa41-da58a1a84235",""
