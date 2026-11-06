@@ -1,0 +1,18 @@
+# Duplicate table exports and archives
+DAX columns/
+New folder/
+*.zip
+
+# Power BI temp/cache files
+*.pbi*.tmp
+.pbi/
+*.pbix.bak
+~$*
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.ipynb_checkpoints/
+__pycache__/
