@@ -84,7 +84,7 @@ Relationships: `Fact_Sales[Order_Date]` to `Date_Table[Date]`, `Fact_Sales[Custo
 | `Last Purchase Date` | Latest order date |
 | `Contribution %` | Share of total sales |
 
-All definitions are exported in [`model_metadata/measures.csv`](model_metadata/measures.csv).
+All definitions are exported in [`model_metadata/measures.csv`](model_meta_data/measures.csv).
 
 ## Repository structure
 
